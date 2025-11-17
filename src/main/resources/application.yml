@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:ordersdb
+    username: SA
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  flyway:
+    enabled: false
+
+jwt:
+  secret: your-super-secure-jwt-secret-key-minimum-32-chars-here
+  expiration: 86400000
+
+logging:
+  level:
+    com.example.orderservice: DEBUG
+
+---
+# НАСТРОЙКИ ДЛЯ DOCKER/POSTGRESQL (новый профиль)
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/orders_db
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secret: your-super-secure-jwt-secret-key-minimum-32-chars-here
+  expiration: 86400000
+
+logging:
+  level:
+    com.example.orderservice: DEBUG
