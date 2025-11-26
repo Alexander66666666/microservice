@@ -1,19 +1,20 @@
 package com.example.orderservice.entity;
 
 
+import com.example.orderservice.constant.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 
 import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+
 public class User {
     @Id
     @UuidGenerator

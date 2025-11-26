@@ -1,6 +1,6 @@
 package com.example.orderservice.dto.response;
 
-import com.example.orderservice.entity.Role;
+import com.example.orderservice.constant.Role;
 import lombok.Data;
 
 import java.util.UUID;

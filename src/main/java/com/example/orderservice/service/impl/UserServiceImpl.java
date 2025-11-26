@@ -1,7 +1,8 @@
 package com.example.orderservice.service.impl;
 
-import com.example.orderservice.entity.Role;
+import com.example.orderservice.constant.Role;
 import com.example.orderservice.entity.User;
+import com.example.orderservice.exception.UsernameAlreadyExistsException;
 import com.example.orderservice.repository.UserRepository;
 import com.example.orderservice.service.interfaces.UserService;
 import jakarta.transaction.Transactional;
@@ -15,15 +16,17 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl  implements UserService {
+public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
 
     @Transactional
     @Override
     public User createUser(String username, String password, Role role) {
         if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Username already exists");
+            throw new UsernameAlreadyExistsException("Username already exists" + username);
         }
         User user = new User();
         user.setUsername(username);
@@ -31,6 +34,7 @@ public class UserServiceImpl  implements UserService {
         user.setRole(role);
         return userRepository.save(user);
     }
+
     @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);

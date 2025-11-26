@@ -3,7 +3,7 @@ package com.example.orderservice.service.impl;
 import com.example.orderservice.dto.request.LoginRequest;
 import com.example.orderservice.dto.request.RegisterRequest;
 import com.example.orderservice.dto.response.JwtResponse;
-import com.example.orderservice.entity.Role;
+import com.example.orderservice.constant.Role;
 import com.example.orderservice.security.JwtUtils;
 import com.example.orderservice.security.UserDetailsImpl;
 import com.example.orderservice.service.interfaces.AuthService;
@@ -52,5 +52,6 @@ public class AuthServiceImpl implements AuthService {
         userService.createUser(request.getUsername(), request.getPassword(), Role.USER);
     }
 
-    }
+}
+
 

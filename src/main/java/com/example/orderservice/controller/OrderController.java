@@ -3,7 +3,7 @@ package com.example.orderservice.controller;
 import com.example.orderservice.dto.request.OrderRequest;
 import com.example.orderservice.dto.response.OrderResponse;
 import com.example.orderservice.entity.Order;
-import com.example.orderservice.entity.OrderStatus;
+import com.example.orderservice.constant.OrderStatus;
 import com.example.orderservice.entity.User;
 import com.example.orderservice.security.UserDetailsImpl;
 import com.example.orderservice.service.interfaces.OrderService;

@@ -2,8 +2,9 @@ package com.example.orderservice.service.impl;
 
 import com.example.orderservice.dto.request.OrderRequest;
 import com.example.orderservice.entity.Order;
-import com.example.orderservice.entity.OrderStatus;
+import com.example.orderservice.constant.OrderStatus;
 import com.example.orderservice.entity.User;
+import com.example.orderservice.exception.OrderNotFoundException;
 import com.example.orderservice.repository.OrderRepository;
 import com.example.orderservice.service.interfaces.OrderService;
 import jakarta.transaction.Transactional;
@@ -51,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public Order updateOrderStatus(UUID orderId, OrderStatus status) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException("Order not found" + orderId));
         order.setStatus(status);
         return orderRepository.save(order);
     }

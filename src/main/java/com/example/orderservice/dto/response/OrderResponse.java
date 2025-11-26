@@ -1,6 +1,6 @@
 package com.example.orderservice.dto.response;
 
-import com.example.orderservice.entity.OrderStatus;
+import com.example.orderservice.constant.OrderStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;

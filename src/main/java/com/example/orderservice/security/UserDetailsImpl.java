@@ -25,30 +25,30 @@ public class UserDetailsImpl implements UserDetails {
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = List.of
                 (new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
-    return new UserDetailsImpl(
-            user.getId(),
-            user.getUsername(),
-            user.getPassword(),
-            authorities
-    );
-}
-@Override
-// проверяет не истек ли срок аккаунта
-public boolean isAccountNonExpired(){
-    return true;
+        return new UserDetailsImpl(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                authorities
+        );
     }
+
     @Override
-    // проверяет не заблокирован ли аккаунт
-    public boolean isAccountNonLocked(){
+    public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
-    // срок действия учетных данных не истек
-    public boolean isCredentialsNonExpired(){
+    public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
-    // проверяет включен ли аккаунт
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
     public boolean isEnabled() {
         return true;
     }
