@@ -2,10 +2,14 @@ package com.example.orderservice.entity;
 
 
 import com.example.orderservice.constant.Role;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-
 
 import java.util.UUID;
 @NoArgsConstructor
@@ -14,7 +18,6 @@ import java.util.UUID;
 @Table(name = "users")
 @Getter
 @Setter
-
 public class User {
     @Id
     @UuidGenerator

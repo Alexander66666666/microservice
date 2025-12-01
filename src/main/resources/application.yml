@@ -20,3 +20,6 @@ jwt:
 logging:
   level:
     com.example.orderservice: DEBUG
+    org.springdoc: DEBUG
+    org.springframework.web: TRACE
+    org.springframework.security: DEBUG

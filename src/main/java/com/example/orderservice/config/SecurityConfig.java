@@ -1,11 +1,9 @@
 package com.example.orderservice.config;
 
-import com.example.orderservice.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,15 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final UserDetailsServiceImpl userDetailsService;
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
 
     @Bean
     public AuthenticationManager authenticationManager
@@ -49,7 +38,19 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
+                        // Swagger endpoints - разрешаем БЕЗ аутентификации
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-resources/**").permitAll()
+                        .requestMatchers("/configuration/ui").permitAll()
+                        .requestMatchers("/configuration/security").permitAll()
+                        .requestMatchers("/webjars/**").permitAll()
+
+                        // Auth endpoints - разрешаем БЕЗ аутентификации
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        // Health check и другие публичные endpoints
                         .requestMatchers("/health").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
@@ -58,7 +59,6 @@ public class SecurityConfig {
                 .headers(headers -> headers
                         .frameOptions(frame -> frame.disable())
                 )
-                .authenticationProvider(authenticationProvider())
                 .build();
     }
 }
