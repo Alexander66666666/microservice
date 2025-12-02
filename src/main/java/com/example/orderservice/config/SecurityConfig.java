@@ -14,23 +14,33 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Конфигурация безопасности Spring Security для приложения.
+ * Настраивает аутентификацию, авторизацию и защиту endpoints.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    /** Бин AuthenticationManager для управления аутентификацией  */
     @Bean
     public AuthenticationManager authenticationManager
             (AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
+    /** Бин PasswordEncoder для шифрования паролей (BCrypt)  */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Конфигурация SecurityFilterChain с настройками безопасности.
+     * Отключает CORS, CSRF, настраивает stateless сессии и правила доступа.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http

@@ -6,6 +6,10 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * DTO для ответа с информацией о заказе.
+ * Используется для отправки данных заказа клиенту через API.
+ */
 @Data
 public class OrderResponse {
     private UUID id;

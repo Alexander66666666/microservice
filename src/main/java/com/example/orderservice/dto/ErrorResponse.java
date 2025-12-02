@@ -3,7 +3,9 @@ package com.example.orderservice.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-
+/**
+ * Стандартный формат ответа об ошибке в API.
+ */
 @Data
 public class ErrorResponse {
     private String errorCode;

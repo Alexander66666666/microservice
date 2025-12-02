@@ -14,6 +14,11 @@ import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
+
+/**
+ * Сущность пользователя системы.
+ * Содержит учетные данные и роль пользователя для авторизации и управления доступом.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,6 +36,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    /**
+     * Роль пользователя в системе. Определяет уровень доступа.
+     * По умолчанию устанавливается в USER.
+     */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.USER;

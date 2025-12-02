@@ -19,12 +19,23 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Реализация сервиса аутентификации и авторизации.
+ * Обеспечивает процессы входа в систему и регистрации новых пользователей
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final JwtUtils jwtUtils;
+
+    /**
+     * Выполняет аутентификацию пользователя и возвращает JWT токен.
+     * @param request DTO с учетными данными пользователя (логин и пароль)
+     * @return JwtResponse с JWT токеном, именем пользователя и его ролью
+     * @throws RuntimeException в случае ошибки аутентификации
+     */
 
     @Override
     public JwtResponse login(LoginRequest request) {
@@ -43,6 +54,13 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
+    /**
+     * Регистрирует нового пользователя в системе.
+     * Проверяет уникальность имени пользователя и создает новую учетную запись.
+     *
+     * @param request DTO с данными для регистрации (имя пользователя и пароль)
+     * @throws RuntimeException если имя пользователя уже занято
+     */
     @Override
     public void register(RegisterRequest request) {
         if (userService.existsByUsername(request.getUsername())) {
@@ -51,7 +69,6 @@ public class AuthServiceImpl implements AuthService {
 
         userService.createUser(request.getUsername(), request.getPassword(), Role.USER);
     }
-
 }
 
 
