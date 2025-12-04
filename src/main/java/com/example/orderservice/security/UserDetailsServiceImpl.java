@@ -9,20 +9,30 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Реализация UserDetailsService для Spring Security.
+ * Загружает данных пользователя из базы данных по имени пользователя для аутентификации.
+ *
+ * <p>Используется Spring Security в процессе аутентификации для получения информации о пользователе</p>
+ */
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
+    /**
+     * Загружает пользователя по логину
+     * Выполняет поиск в базе данных и преобразует сущность в UserDetails.
+     *
+     * @param username имя пользователя для поиска
+     * @return объект UserDetails с данными пользователя
+     * @throws UsernameNotFoundException если пользователь с указанным именем не найден
+     */
     @Override
     @Transactional
-    // метод, который загружает пользователя по имени
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //Ищет пользователя в базе данных по логину для получения данных пользователя из БД
         User user = userRepository.findByUsername(username)
-                //если пользователь не найден, бросает исключение
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + username));
-// Преобразует нашего User в UserDetailsImpl и возвращает его.
         return UserDetailsImpl.build(user);
     }
 }
